@@ -63,17 +63,33 @@ For managing datasets, checkpoints and pretrained backbones, we use a single env
 |   |   |   |   ├── pan_maps
 |   |   |   |   ├── segments.json
 |   |   |   ├── mapillary_panoptic
-|   |   |   |   ├── pan_maps                <- mapillary/
+|   |   |   |   ├── pan_maps               
 |   |   |   |   ├── segments.json
 |   |   |   ├── cityscapes_vps_train.json
 |   |   |   ├── kitti_step_train.json
 |   |   |   ├── vipseg
+|   |   |   |   ├── panoptic_masks
+|   |   |   |   ├── video_info.json
 |   |   |   ├── youtube_vis_2021.json
 |   |   |   ├── ovis.json
 |   |   |   ├── davis_semisupervised.json
 |   |   |   ├── burst.json
 |   |   ├── inference   
-|   |   |   ├── 
+|   |   |   ├── cityscapes_vps
+|   |   |   |   ├── im_all_info_val_city_vps.json
+|   |   |   ├── vipseg
+|   |   |   |   ├── val.json
+|   |   |   ├── youtube_vis
+|   |   |   |   ├── valid_2021.json
+|   |   |   ├── ovis
+|   |   |   |   ├── valid.json
+|   |   |   ├── davis
+|   |   |   |   ├── Annotations
+|   |   |   |   ├── ImageSet_val.txt
+|   |   |   |   ├── ImageSet_testdev.txt
+|   |   |   ├── burst
+|   |   |   |   ├── first_frame_annotations_val.json
+|   |   |   |   ├── first_frame_annotations_test.json
 ```
 
 Note that you do not need to setup all the datasets if you only want to train/infer on a sub-set of them. For training the full model however, you need the complete directory tree above
