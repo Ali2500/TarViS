@@ -1,6 +1,6 @@
 # TarViS: A Unified Architecture for Target-based Video Segmentation
 
-| Video Instance Segmentation | VPS | VOS | PET |
+| Video Instance Segmentation | Video Panoptic Segmentation | Video Object Segmentation | Point Exemplar-guided Tracking |
 | --- | --- | --- | --- |
 | ![VIS](.images/vis.gif) | ![VOS](.images/vps.gif "VPS") | ![VOS](.images/vos.gif "VOS") | ![PET](.images/pet.gif "PET") |
 
