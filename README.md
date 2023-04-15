@@ -4,6 +4,8 @@
 
 [`PDF`](https://arxiv.org/pdf/2301.02657.pdf) | [`Cite`](https://github.com/Ali2500/TarViS/blob/main/README.md#cite)
 
+**NOTE:** This repo and readme is a work-in-progress. I'll upload the code once the documentation is complete.
+
 | Video Instance Segmentation | Video Panoptic Segmentation | Video Object Segmentation | Point Exemplar-guided Tracking |
 | --- | --- | --- | --- |
 | ![VIS](.images/vis.gif) | ![VOS](.images/vps.gif "VPS") | ![VOS](.images/vos.gif "VOS") | ![PET](.images/pet.gif "PET") |
@@ -22,7 +24,7 @@
 
 ## Directory Setup
 
-For managing datasets, checkpoints and pretrained backbones, we use a single environment variable $TARVIS_WORKSPACE_DIR which points to a directory that is organized as follows:
+For managing datasets, checkpoints and pretrained backbones, we use a single environment variable `$TARVIS_WORKSPACE_DIR` which points to a directory that is organized as follows:
 
 ```
 ├── $TARVIS_WORKSPACE_DIR
@@ -52,9 +54,17 @@ For managing datasets, checkpoints and pretrained backbones, we use a single env
 |   ├── dataset_annotation            <- Annotations for all datasets go here
 |   |   ├── training
 |   |   |   ├── ade20k_panoptic       <- image panoptic datasets for pretraining
+|   |   |   |   ├── pan_maps
+|   |   |   |   ├── segments.json
 |   |   |   ├── cityscapes_panoptic
+|   |   |   |   ├── pan_maps
+|   |   |   |   ├── segments.json
 |   |   |   ├── coco_panoptic
+|   |   |   |   ├── pan_maps
+|   |   |   |   ├── segments.json
 |   |   |   ├── mapillary_panoptic
+|   |   |   |   ├── pan_maps                <- mapillary/
+|   |   |   |   ├── segments.json
 |   |   |   ├── cityscapes_vps_train.json
 |   |   |   ├── kitti_step_train.json
 |   |   |   ├── vipseg
@@ -66,6 +76,7 @@ For managing datasets, checkpoints and pretrained backbones, we use a single env
 |   |   |   ├── 
 ```
 
+Note that you do not need to setup all the datasets if you only want to train/infer on a sub-set of them. For training the full model however, you need the complete directory tree above
 
 ## Cite
 
