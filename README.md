@@ -10,6 +10,11 @@
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/tarvis-a-unified-approach-for-target-based/video-instance-segmentation-on-youtube-vis-2)](https://paperswithcode.com/sota/video-instance-segmentation-on-youtube-vis-2?p=tarvis-a-unified-approach-for-target-based)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/tarvis-a-unified-approach-for-target-based/video-instance-segmentation-on-ovis-1)](https://paperswithcode.com/sota/video-instance-segmentation-on-ovis-1?p=tarvis-a-unified-approach-for-target-based)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/tarvis-a-unified-approach-for-target-based/video-panoptic-segmentation-on-kitti-step)](https://paperswithcode.com/sota/video-panoptic-segmentation-on-kitti-step?p=tarvis-a-unified-approach-for-target-based)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/tarvis-a-unified-approach-for-target-based/video-panoptic-segmentation-on-cityscapes-vps)](https://paperswithcode.com/sota/video-panoptic-segmentation-on-cityscapes-vps?p=tarvis-a-unified-approach-for-target-based)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/tarvis-a-unified-approach-for-target-based/visual-object-tracking-on-davis-2017)](https://paperswithcode.com/sota/visual-object-tracking-on-davis-2017?p=tarvis-a-unified-approach-for-target-based)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/tarvis-a-unified-approach-for-target-based/on-exemplar-guided-point-val)](https://paperswithcode.com/sota/on-exemplar-guided-point-val?p=tarvis-a-unified-approach-for-target-based)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/tarvis-a-unified-approach-for-target-based/on-exemplar-guided-point-test)](https://paperswithcode.com/sota/on-exemplar-guided-point-test?p=tarvis-a-unified-approach-for-target-based)
 
 ## Abstract
 
