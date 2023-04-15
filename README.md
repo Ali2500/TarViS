@@ -1,6 +1,6 @@
 # TarViS: A Unified Architecture for Target-based Video Segmentation (CVPR'23 Highlight)
 
-[`PDF`]([https://arxiv.org/pdf/2209.12118.pdf](https://arxiv.org/pdf/2301.02657.pdf)) | [`Cite`](https://github.com/Ali2500/TarViS/blob/main/README.md#cite)
+[`PDF`](https://arxiv.org/pdf/2301.02657.pdf)) | [`Cite`](https://github.com/Ali2500/TarViS/blob/main/README.md#cite)
 
 | Video Instance Segmentation | Video Panoptic Segmentation | Video Object Segmentation | Point Exemplar-guided Tracking |
 | --- | --- | --- | --- |
