@@ -2,7 +2,7 @@
 
 [Ali Athar](https://www.aliathar.net/), Alexander Hermans, Jonathon Luiten, Deva Ramanan, Bastian Leibe
 
-[`PDF`](https://arxiv.org/pdf/2301.02657.pdf) | [`Cite`](https://github.com/Ali2500/TarViS/blob/main/README.md#cite)
+[`PDF`](https://arxiv.org/pdf/2301.02657.pdf) | [`Paperswithcode`](https://paperswithcode.com/paper/tarvis-a-unified-approach-for-target-based) | [`Cite`](https://github.com/Ali2500/TarViS/blob/main/README.md#cite)
 
 **NOTE:** This repo and readme is a work-in-progress. I'll upload the code once the documentation is complete.
 
