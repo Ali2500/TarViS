@@ -32,43 +32,80 @@ For managing datasets, checkpoints and pretrained backbones, we use a single env
 │   ├── pretrained_backbones          <- ImageNet pretrained Swin backbone weights
 │   ├── dataset_images                <- Images/videos for all datasets go here
 |   |   ├── training
-|   |   |   ├── ade20k                <- image panoptic datasets for pretraining
+|   |   |   ├── ade20k               
+|   |   |   |   ├── ADE_train_00000001.jpg
+|   |   |   |   ├── ...
 |   |   |   ├── cityscapes
+|   |   |   |   ├── aachen
+|   |   |   |   ├── ...
 |   |   |   ├── coco
+|   |   |   |   ├── 000000000009.jpg
+|   |   |   |   ├── ...
 |   |   |   ├── mapillary
-|   |   |   ├── cityscapes_vps        <- video panoptic datasets
+|   |   |   |   ├── 0035fkbjWljhaftpVM37-g.jpg
+|   |   |   |   ├── ...
+|   |   |   ├── cityscapes_vps
+|   |   |   |   ├── 0001_0001_frankfurt_000000_000279_newImg8bit.png
+|   |   |   |   ├── ...
 |   |   |   ├── kitti_step
+|   |   |   |   ├── 0000
+|   |   |   |   ├── ...
 |   |   |   ├── vipseg
-|   |   |   ├── youtube_vis_2021      <- video instance segmentation datasets
+|   |   |   |   ├── 0_wHveSGjXyDY
+|   |   |   |   ├── ...
+|   |   |   ├── youtube_vis_2021
+|   |   |   |   ├── 3245e049fb
+|   |   |   |   ├── ...
 |   |   |   ├── ovis
-|   |   |   ├── davis                 <- video object segmentation
-|   |   |   ├── burst                 <- point exemplar-guided tracking
+|   |   |   |   ├── 001ca3cb
+|   |   |   |   ├── ...
+|   |   |   ├── davis 
+|   |   |   |   ├── bear
+|   |   |   |   ├── ...
+|   |   |   ├── burst   
+|   |   |   |   ├── YFCC100M
+|   |   |   |   ├── ...
 |   |   ├── inference
-|   |   |   ├── cityscapes_vps_val    <- video panoptic datasets
+|   |   |   ├── cityscapes_vps_val
 |   |   |   ├── kitti_step_val
 |   |   |   ├── vipseg
-|   |   |   ├── youtube_vis_2021      <- video instance segmentation datasets
+|   |   |   ├── youtube_vis_2021     
 |   |   |   ├── ovis
-|   |   |   ├── davis                 <- video object segmentation
-|   |   |   ├── burst                 <- point exemplar-guided tracking
+|   |   |   ├── davis                 
+|   |   |   ├── burst
+|   |   |   |   ├── val
+|   |   |   |   |   ├── YFCC100M
+|   |   |   |   |   ├── ...
+|   |   |   |   ├── test
+|   |   |   |   |   ├── YFCC100M
+|   |   |   |   |   ├── ...
 |   ├── dataset_annotation            <- Annotations for all datasets go here
 |   |   ├── training
-|   |   |   ├── ade20k_panoptic       <- image panoptic datasets for pretraining
+|   |   |   ├── ade20k_panoptic    
 |   |   |   |   ├── pan_maps
+|   |   |   |   |   ├── ADE_train_00000001.png
 |   |   |   |   ├── segments.json
 |   |   |   ├── cityscapes_panoptic
 |   |   |   |   ├── pan_maps
+|   |   |   |   |   ├── aachen_000000_000019_gtFine_panoptic.png
+|   |   |   |   |   ├── ...
 |   |   |   |   ├── segments.json
 |   |   |   ├── coco_panoptic
 |   |   |   |   ├── pan_maps
+|   |   |   |   |   ├── 000000000009.png
+|   |   |   |   |   ├── ...
 |   |   |   |   ├── segments.json
 |   |   |   ├── mapillary_panoptic
-|   |   |   |   ├── pan_maps               
+|   |   |   |   ├── pan_maps    
+|   |   |   |   |   ├── 0035fkbjWljhaftpVM37-g.png
+|   |   |   |   |   ├── ...
 |   |   |   |   ├── segments.json
 |   |   |   ├── cityscapes_vps_train.json
 |   |   |   ├── kitti_step_train.json
 |   |   |   ├── vipseg
 |   |   |   |   ├── panoptic_masks
+|   |   |   |   |   ├── 0_wHveSGjXyDY
+|   |   |   |   |   ├── ...
 |   |   |   |   ├── video_info.json
 |   |   |   ├── youtube_vis_2021.json
 |   |   |   ├── ovis.json
