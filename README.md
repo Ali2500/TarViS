@@ -100,8 +100,8 @@ For managing datasets, checkpoints and pretrained backbones, we use a single env
 |   |   |   |   |   ├── 0035fkbjWljhaftpVM37-g.png
 |   |   |   |   |   ├── ...
 |   |   |   |   ├── segments.json
-|   |   |   ├── cityscapes_vps_train.json
-|   |   |   ├── kitti_step_train.json
+|   |   |   ├── cityscapes_vps.json
+|   |   |   ├── kitti_step.json
 |   |   |   ├── vipseg
 |   |   |   |   ├── panoptic_masks
 |   |   |   |   |   ├── 0_wHveSGjXyDY
