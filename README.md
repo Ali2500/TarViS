@@ -146,7 +146,7 @@ For managing datasets, checkpoints and pretrained backbones, we use a single env
 |   |   |   |   ├── first_frame_annotations_test.json
 ```
 
-You do not need to setup all the datasets if you only want to train/infer on a sub-set of them. For training the full model however, you need the complete directory tree above.
+You do not need to setup all the datasets if you only want to train/infer on a sub-set of them. For training the full model however, you need the complete directory tree above. All paths in-code are provided from [tarvis/utils/paths.py](https://github.com/Ali2500/TarViS/blob/main/tarvis/utils/paths.py), so any changes can be easily made there.
 
 #### Partially complete workspace directory download
 
