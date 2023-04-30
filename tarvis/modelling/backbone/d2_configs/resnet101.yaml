@@ -1,0 +1,10 @@
+MODEL:
+  WEIGHTS: "R-101.pkl"
+  BACKBONE:
+    FREEZE_AT: 0
+  RESNETS:
+    DEPTH: 101
+    STEM_OUT_CHANNELS: 64
+    STRIDE_IN_1X1: False
+    OUT_FEATURES: ["res2", "res3", "res4", "res5"]
+VERSION: 2

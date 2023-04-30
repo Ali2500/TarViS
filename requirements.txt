@@ -1,0 +1,19 @@
+colorama==0.4.5
+detectron2==0.6
+einops==0.4.1
+fvcore==0.1.5.post20220512
+imgaug==0.4.0
+numpy==1.21.6
+opencv_python==4.6.0.66
+panopticapi==0.1
+Pillow==9.5.0
+pycocotools==2.0.4
+PyYAML==6.0
+scipy==1.7.3
+setuptools==63.1.0
+tensorflow==2.12.0      # only needed for kitti step eval metrics script
+tensorflow_cpu==2.10.0  # only needed for kitti step eval metrics script
+timm==0.5.4
+torch==1.11.0
+tqdm==4.64.0
+wandb==0.13.0

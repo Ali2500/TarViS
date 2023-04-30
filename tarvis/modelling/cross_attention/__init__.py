@@ -1,0 +1,2 @@
+from .soft_masked_attention import SoftMaskedAttention
+from .hard_masked_attention import HardMaskedAttention

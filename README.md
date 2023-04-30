@@ -22,7 +22,20 @@
 
 > The general domain of video segmentation is currently fragmented into different tasks spanning multiple benchmarks. Despite rapid progress in the state-of-the-art, current methods are overwhelmingly task-specific and cannot conceptually generalize to other tasks. Inspired by recent approaches with multi-task capability, we propose TarViS: a novel, unified network architecture that can be applied to any task that requires segmenting a set of arbitrarily def ined ‘targets’ in video. Our approach is flexible with respect to how tasks define these targets, since it models the latter as abstract ‘queries’ which are then used to predict pixel-precise target masks. A single TarViS model can be trained jointly on a collection of datasets spanning different tasks, and can hot-swap between tasks during inference without any task-specific retraining. To demonstrate its effectiveness, we apply TarViS to four different tasks, namely Video Instance Segmentation (VIS), Video Panoptic Segmentation (VPS), Video Object Segmentation (VOS) and Point Exemplar-guided Tracking (PET). Our unified, jointly trained model achieves state-of-the-art performance on 5/7 benchmarks spanning these four tasks, and competitive performance on the remaining two
 
-## Directory Setup
+## Setup
+
+
+#### Building CUDA Kernels
+Build the deformable attention CUDA kernels as follows:
+
+```
+cd tarvis/modelling/backbone/temporal_neck/ops
+bash make.sh
+```
+
+If you already have the kernels installed from Mask2Former then you can skip this step since they're identical.
+
+#### Directory Structure
 
 For managing datasets, checkpoints and pretrained backbones, we use a single environment variable `$TARVIS_WORKSPACE_DIR` which points to a directory that is organized as follows:
 
@@ -129,7 +142,65 @@ For managing datasets, checkpoints and pretrained backbones, we use a single env
 |   |   |   |   ├── first_frame_annotations_test.json
 ```
 
-Note that you do not need to setup all the datasets if you only want to train/infer on a sub-set of them. For training the full model however, you need the complete directory tree above
+You do not need to setup all the datasets if you only want to train/infer on a sub-set of them. For training the full model however, you need the complete directory tree above.
+
+#### Partially complete workspace directory download
+
+To make the setup easier, you can download a partially completel workspace directory from [HERE](https://omnomnom.vision.rwth-aachen.de/data/TarViS/tarvis_workspace_dir.zip). It does not include any image files, but it does contain all the JSON format annotation files. For some datasets, e.g. DAVIS, we converted the dataset annotations into a custom format to make it easier to re-use data loading code.
+
+**Important:** The license agreement for this repository does not apply to the annotations. Please refer to the license agreements for the respective datasets if you wish to use these annotations.
+
+## Trained Models
+
+Download links to trained checkpoints are available below. Each zipped directory contains a checkpoint file ending with `.pth` and a `config.yaml` file. We also provide the intermediate checkpoint for the model after the pre-training step on augmented image sequences.
+
+|           | Pretrain (augmented images) | Finetine (video) |
+|-----------|-----------------------------|------------------|
+| ResNet-50 | [URL](https://omnomnom.vision.rwth-aachen.de/data/TarViS/resnet50_pretrain.zip)                         | [URL](https://omnomnom.vision.rwth-aachen.de/data/TarViS/resnet50_finetune.zip)              |
+| Swin-T    | [URL](https://omnomnom.vision.rwth-aachen.de/data/TarViS/swin-tiny_pretrain.zip)                         | [URL](https://omnomnom.vision.rwth-aachen.de/data/TarViS/swin-tiny_finetune.zip)              |
+| Swin-L    | [URL](https://omnomnom.vision.rwth-aachen.de/data/TarViS/swin-large_pretrain.zip)                         | [URL](https://omnomnom.vision.rwth-aachen.de/data/TarViS/swin-large_finetune.zip)              |
+
+## Inference
+
+Run the following command with the desired dataset. The checkpoint path can be any of the finetuned models from the the download links above, or models that you train yourself. It is important that `config.yaml` is also present in the same directory as the `checkpoint.pth` file.
+
+```python
+python tarvis/inference/main.py /path/to/checkpoint.pth --dataset {YOUTUBE_VIS,OVIS,CITYSCAPES_VPS,KITTI_STEP,DAVIS,BURST} --amp --output_dir /path/to/output/directory
+```
+
+Run `python tarvis/inference/main.py --help` to see additional options.
+
+## Training
+
+First run the pretraining on augmented image datasets (COCO, ADE20k, Cityscapes, Mapillary). The following command does this assuming 8 nodes, each containing 4 GPUs:
+
+```python
+torchrun --nnodes=8 --nproc_per_node=4 --rdzv_id=22021994 --rdzv_backend=c10d --rdzv_endpoint ${DDP_HOST_ADDRESS} tarvis/training/main.py --model_dir my_first_tarvis_pretraining --cfg pretrain_{resnet50_swin-tiny,swin-large}.yaml --amp  --cfg.MODEL.BACKBONE {ResNet50,SwinTiny,SwinLarge} 
+```
+
+The `--model_dir` argument is interpreted relative to `${TARVIS_WORKSPACE_DIR}/checkpoints`. You can also give as absolute path to override the default path prefix.
+
+Then run the finetuning on video data (YouTube-VIS, OVIS, KITTI-STEP, Cityscapes-VPS, DAVIS, BURST):
+
+```python
+torchrun --nnodes=8 --nproc_per_node=4 --rdzv_id=22021994 --rdzv_backend=c10d --rdzv_endpoint ${DDP_HOST_ADDRESS} tarvis/training/main.py --model_dir my_first_tarvis_finetuning --cfg finetune_{resnet50_swin-tiny,swin-large}.yaml --amp  --finetune_from /path/to/my_first_tarvis_pretraining
+```
+
+For this, the `--finetune_from` argument should point to the pretraining directory (not the checkpoint file). It will automatically load the latest checkpoint from this directory.
+
+### Notes on Training
+
+- To run on a single GPU, omit `torchrun` and its arguments and just run the script normally: `python tarvis/training/main.py ...`
+- The training code applies gradient accumulation, so the batch size specified in the config (32 by default) is maintained regardless of how many GPUs are used e.g. if you use 8 GPUs, the gradients for 4 consecutive iterations will be accumulated before running `optimizer.step()`. The only constraint is that the batch size should be exactly divisible by the number of GPUs.
+- Training can be resumed from a checkpoint by running the training script as follows: 
+
+```python
+torchrun --nnodes=8 --nproc_per_node=4 --rdzv_id=22021994 --rdzv_backend=c10d --rdzv_endpoint ${DDP_HOST_ADDRESS} tarvis/training/main.py --restore_session /path/to/latest/checkpoint.pth
+```
+
+- The data loading code uses OpenCV which sometimes behaves strangely on compute clusters by spawning too many worker threads. If you experience slow data loading times, try setting `OMP_NUM_THREADS=1` and running the training script with `--cv2_num_threads=2`.
+- Training metrics are logged using tensorboard by default, but logging with weights and biases is also supported by provided the `--wandb_session` option.
+- Run `python tarvis/training/main.py --help` to see additional options.
 
 ## Cite
 
