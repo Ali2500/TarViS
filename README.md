@@ -83,7 +83,7 @@ For managing datasets, checkpoints and pretrained backbones, we use a single env
 |   |   |   |   ├── YFCC100M
 |   |   |   |   ├── ...
 |   |   ├── inference
-|   |   |   ├── cityscapes_vps_val
+|   |   |   ├── cityscapes_vps_val     <- same directory structure as training
 |   |   |   ├── kitti_step_val
 |   |   |   ├── vipseg
 |   |   |   ├── youtube_vis_2021     
@@ -96,7 +96,7 @@ For managing datasets, checkpoints and pretrained backbones, we use a single env
 |   |   |   |   ├── test
 |   |   |   |   |   ├── YFCC100M
 |   |   |   |   |   ├── ...
-|   ├── dataset_annotation            <- Annotations for all datasets go here
+|   ├── dataset_annotations            <- Annotations for all datasets go here
 |   |   ├── training
 |   |   |   ├── ade20k_panoptic    
 |   |   |   |   ├── pan_maps
