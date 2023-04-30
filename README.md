@@ -18,6 +18,10 @@
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/tarvis-a-unified-approach-for-target-based/on-burst-point-exemplar-guided-val)](https://paperswithcode.com/sota/on-burst-point-exemplar-guided-val?p=tarvis-a-unified-approach-for-target-based)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/tarvis-a-unified-approach-for-target-based/on-burst-point-exemplar-guided-test)](https://paperswithcode.com/sota/on-burst-point-exemplar-guided-test?p=tarvis-a-unified-approach-for-target-based)
 
+## Updates
+
+**30.04.2023:** Complete code and pre-trained checkpoints uploaded.
+
 ## Abstract
 
 > The general domain of video segmentation is currently fragmented into different tasks spanning multiple benchmarks. Despite rapid progress in the state-of-the-art, current methods are overwhelmingly task-specific and cannot conceptually generalize to other tasks. Inspired by recent approaches with multi-task capability, we propose TarViS: a novel, unified network architecture that can be applied to any task that requires segmenting a set of arbitrarily def ined ‘targets’ in video. Our approach is flexible with respect to how tasks define these targets, since it models the latter as abstract ‘queries’ which are then used to predict pixel-precise target masks. A single TarViS model can be trained jointly on a collection of datasets spanning different tasks, and can hot-swap between tasks during inference without any task-specific retraining. To demonstrate its effectiveness, we apply TarViS to four different tasks, namely Video Instance Segmentation (VIS), Video Panoptic Segmentation (VPS), Video Object Segmentation (VOS) and Point Exemplar-guided Tracking (PET). Our unified, jointly trained model achieves state-of-the-art performance on 5/7 benchmarks spanning these four tasks, and competitive performance on the remaining two
@@ -146,7 +150,7 @@ You do not need to setup all the datasets if you only want to train/infer on a s
 
 #### Partially complete workspace directory download
 
-To make the setup easier, you can download a partially completel workspace directory from [HERE](https://omnomnom.vision.rwth-aachen.de/data/TarViS/tarvis_workspace_dir.zip). It does not include any image files, but it does contain all the JSON format annotation files. For some datasets, e.g. DAVIS, we converted the dataset annotations into a custom format to make it easier to re-use data loading code.
+To make the setup easier, you can download a partially complete workspace directory from [HERE](https://omnomnom.vision.rwth-aachen.de/data/TarViS/tarvis_workspace_dir.zip). It does not include any image files, but it does contain all the JSON format annotation files. For some datasets, e.g. DAVIS, we converted the dataset annotations into a custom format to make it easier to re-use data loading code.
 
 **Important:** The license agreement for this repository does not apply to the annotations. Please refer to the license agreements for the respective datasets if you wish to use these annotations.
 
