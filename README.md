@@ -158,7 +158,7 @@ To make the setup easier, you can download a partially complete workspace direct
 
 Download links to trained checkpoints are available below. Each zipped directory contains a checkpoint file ending with `.pth` and a `config.yaml` file. We also checkpoints for the models after just the pre-training step on augmented image sequences.
 
-|           | Pretrain (augmented images) | Finetine (video) |
+|           | Pretrain (augmented images) | Finetune (video) |
 |-----------|-----------------------------|------------------|
 | ResNet-50 | [URL](https://omnomnom.vision.rwth-aachen.de/data/TarViS/resnet50_pretrain.zip)                         | [URL](https://omnomnom.vision.rwth-aachen.de/data/TarViS/resnet50_finetune.zip)              |
 | Swin-T    | [URL](https://omnomnom.vision.rwth-aachen.de/data/TarViS/swin-tiny_pretrain.zip)                         | [URL](https://omnomnom.vision.rwth-aachen.de/data/TarViS/swin-tiny_finetune.zip)              |
@@ -182,7 +182,7 @@ First run the pretraining on augmented image datasets (COCO, ADE20k, Cityscapes,
 torchrun --nnodes=8 --nproc_per_node=4 --rdzv_id=22021994 --rdzv_backend=c10d --rdzv_endpoint ${DDP_HOST_ADDRESS} tarvis/training/main.py --model_dir my_first_tarvis_pretraining --cfg pretrain_{resnet50_swin-tiny,swin-large}.yaml --amp  --cfg.MODEL.BACKBONE {ResNet50,SwinTiny,SwinLarge} 
 ```
 
-The `--model_dir` argument is interpreted relative to `${TARVIS_WORKSPACE_DIR}/checkpoints`. You can also give as absolute path to override the default path prefix.
+The `--model_dir` argument is interpreted relative to `${TARVIS_WORKSPACE_DIR}/checkpoints`. You can also give as absolute path here.
 
 Then run the finetuning on video data (YouTube-VIS, OVIS, KITTI-STEP, Cityscapes-VPS, DAVIS, BURST):
 
