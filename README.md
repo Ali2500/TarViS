@@ -204,6 +204,7 @@ torchrun --nnodes=8 --nproc_per_node=4 --rdzv_id=22021994 --rdzv_backend=c10d --
 
 - The data loading code uses OpenCV which sometimes behaves strangely on compute clusters by spawning too many worker threads. If you experience slow data loading times, try setting `OMP_NUM_THREADS=1` and running the training script with `--cv2_num_threads=2`.
 - Training metrics are logged using tensorboard by default, but logging with weights and biases is also supported by provided the `--wandb_session` option.
+- With the default settings, each GPU should have at least 24GB VRAM to prevent OOM errors. If you want to train on smaller GPUs, consider reducing the input image resolution.
 - Run `python tarvis/training/main.py --help` to see additional options.
 
 ## Cite
