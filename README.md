@@ -166,7 +166,7 @@ Download links to trained checkpoints are available below. Each zipped directory
 
 ## Inference
 
-Run the following command with the desired dataset. The checkpoint path can be any of the finetuned models from the the download links above, or models that you train yourself. It is important that `config.yaml` is also present in the same directory as the `checkpoint.pth` file.
+Run the following command with the desired dataset. The checkpoint path can be any of the finetuned models from the the download links above, or models that you train yourself. It is important that `config.yaml` is also present in the same directory as the checkpoint `.pth` file.
 
 ```python
 python tarvis/inference/main.py /path/to/checkpoint.pth --dataset {YOUTUBE_VIS,OVIS,CITYSCAPES_VPS,KITTI_STEP,DAVIS,BURST} --amp --output_dir /path/to/output/directory
