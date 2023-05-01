@@ -4,8 +4,6 @@
 
 [`PDF`](https://arxiv.org/pdf/2301.02657.pdf) | [`Paperswithcode`](https://paperswithcode.com/paper/tarvis-a-unified-approach-for-target-based) | [`Cite`](https://github.com/Ali2500/TarViS/blob/main/README.md#cite)
 
-**NOTE:** This repo and readme is a work-in-progress. I'll upload the code once the documentation is complete.
-
 | Video Instance Segmentation | Video Panoptic Segmentation | Video Object Segmentation | Point Exemplar-guided Tracking |
 | --- | --- | --- | --- |
 | ![VIS](.images/vis.gif) | ![VOS](.images/vps.gif "VPS") | ![VOS](.images/vos.gif "VOS") | ![PET](.images/pet.gif "PET") |
