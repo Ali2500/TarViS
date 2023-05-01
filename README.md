@@ -154,7 +154,7 @@ To make the setup easier, you can download a partially complete workspace direct
 
 ## Trained Models
 
-Download links to trained checkpoints are available below. Each zipped directory contains a checkpoint file ending with `.pth` and a `config.yaml` file. We also checkpoints for the models after just the pre-training step on augmented image sequences.
+Download links to trained checkpoints are available below. Each zipped directory contains a checkpoint file ending with `.pth` and a `config.yaml` file. We also provide checkpoints for the models after the pre-training step on augmented image sequences.
 
 |           | Pretrain (augmented images) | Finetune (video) |
 |-----------|-----------------------------|------------------|
