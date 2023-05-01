@@ -156,7 +156,7 @@ To make the setup easier, you can download a partially complete workspace direct
 
 Download links to trained checkpoints are available below. Each zipped directory contains a checkpoint file ending with `.pth` and a `config.yaml` file. We also provide checkpoints for the models after the pre-training step on augmented image sequences.
 
-|           | Pretrain (augmented images) | Finetune (video) |
+| Backbone  | Pretrain (augmented images) | Finetune (video) |
 |-----------|-----------------------------|------------------|
 | ResNet-50 | [URL](https://omnomnom.vision.rwth-aachen.de/data/TarViS/resnet50_pretrain.zip)                         | [URL](https://omnomnom.vision.rwth-aachen.de/data/TarViS/resnet50_finetune.zip)              |
 | Swin-T    | [URL](https://omnomnom.vision.rwth-aachen.de/data/TarViS/swin-tiny_pretrain.zip)                         | [URL](https://omnomnom.vision.rwth-aachen.de/data/TarViS/swin-tiny_finetune.zip)              |
