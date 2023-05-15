@@ -180,7 +180,7 @@ First run the pretraining on augmented image datasets (COCO, ADE20k, Cityscapes,
 torchrun --nnodes=8 --nproc_per_node=4 --rdzv_id=22021994 --rdzv_backend=c10d --rdzv_endpoint ${DDP_HOST_ADDRESS} tarvis/training/main.py --model_dir my_first_tarvis_pretraining --cfg pretrain_{resnet50_swin-tiny,swin-large}.yaml --amp  --cfg.MODEL.BACKBONE {ResNet50,SwinTiny,SwinLarge} 
 ```
 
-The `--model_dir` argument is interpreted relative to `${TARVIS_WORKSPACE_DIR}/checkpoints`. You can also give as absolute path here.
+`${DDP_HOST_ADDRESS}` is the name of one of the participating nodes. The `--model_dir` is a relative path it will be appended to `${TARVIS_WORKSPACE_DIR}/checkpoints`, but you can also give as absolute path. The model checkpoints and logs will be saved in this location.
 
 Then run the finetuning on video data (YouTube-VIS, OVIS, KITTI-STEP, Cityscapes-VPS, DAVIS, BURST):
 
@@ -202,7 +202,7 @@ torchrun --nnodes=8 --nproc_per_node=4 --rdzv_id=22021994 --rdzv_backend=c10d --
 
 - The data loading code uses OpenCV which sometimes behaves strangely on compute clusters by spawning too many worker threads. If you experience slow data loading times, try setting `OMP_NUM_THREADS=1` and running the training script with `--cv2_num_threads=2`.
 - Training metrics are logged using tensorboard by default, but logging with weights and biases is also supported by provided the `--wandb_session` option.
-- With the default settings, each GPU should have at least 24GB VRAM to prevent OOM errors. If you want to train on smaller GPUs, consider reducing the input image resolution.
+- With the default settings, each GPU should have at least 24GB VRAM to prevent OOM errors. If you want to train on smaller GPUs, consider reducing the input image resolution. This is specified in the config separately for each dataset. See `cfg.DATASETS.{dataset_name}.TRAINING`.
 - Run `python tarvis/training/main.py --help` to see additional options.
 
 ## Cite
