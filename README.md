@@ -180,7 +180,7 @@ First run the pretraining on augmented image datasets (COCO, ADE20k, Cityscapes,
 torchrun --nnodes=8 --nproc_per_node=4 --rdzv_id=22021994 --rdzv_backend=c10d --rdzv_endpoint ${DDP_HOST_ADDRESS} tarvis/training/main.py --model_dir my_first_tarvis_pretraining --cfg pretrain_{resnet50_swin-tiny,swin-large}.yaml --amp  --cfg.MODEL.BACKBONE {ResNet50,SwinTiny,SwinLarge} 
 ```
 
-`${DDP_HOST_ADDRESS}` is the name of one of the participating nodes. The `--model_dir` is a relative path it will be appended to `${TARVIS_WORKSPACE_DIR}/checkpoints`, but you can also give as absolute path. The model checkpoints and logs will be saved in this location.
+The variable `${DDP_HOST_ADDRESS}` should be set to the name of one of the participating nodes. `--model_dir` is where the checkpoints, config and logs will be saved. If a relative path is given it will be appended to `${TARVIS_WORKSPACE_DIR}/checkpoints`, but you can also give as absolute path.
 
 Then run the finetuning on video data (YouTube-VIS, OVIS, KITTI-STEP, Cityscapes-VPS, DAVIS, BURST):
 
