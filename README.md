@@ -2,7 +2,7 @@
 
 [Ali Athar](https://www.aliathar.net/), Alexander Hermans, Jonathon Luiten, Deva Ramanan, Bastian Leibe
 
-[`PDF`](https://arxiv.org/pdf/2301.02657.pdf) | [`Paperswithcode`](https://paperswithcode.com/paper/tarvis-a-unified-approach-for-target-based) | [`Cite`](https://github.com/Ali2500/TarViS/blob/main/README.md#cite)
+[`PDF`](https://arxiv.org/pdf/2301.02657.pdf) | [`YouTube`](https://www.youtube.com/watch?v=qecFRmSYq40&t=3s) | [`Paperswithcode`](https://paperswithcode.com/paper/tarvis-a-unified-approach-for-target-based) | [`Cite`](https://github.com/Ali2500/TarViS/blob/main/README.md#cite)
 
 | Video Instance Segmentation | Video Panoptic Segmentation | Video Object Segmentation | Point Exemplar-guided Tracking |
 | --- | --- | --- | --- |
