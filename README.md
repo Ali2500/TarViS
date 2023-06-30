@@ -30,13 +30,13 @@
 
 #### Environment Setup
 
-1) Create a conda environment with python 3.7
+Step 1) Create a conda environment with python 3.7
 
 ```bash
 conda create -n tarvis python=3.7
 ```
 
-2) Install PyTorch v1.11. We developed the code base on a workstation with an RTX3090 GPU and CUDA v11.1
+Step 2) Install PyTorch v1.11. We developed the code base on a workstation with an RTX3090 GPU and CUDA v11.1
 
 ```
 conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 cudatoolkit=11.3 -c pytorch
