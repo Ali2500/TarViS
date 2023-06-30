@@ -19,6 +19,7 @@
 
 ## Updates
 
+**30.06.2023:** Significantly improved environment setup instructions.
 **30.04.2023:** Complete code and pre-trained checkpoints uploaded.
 
 ## Abstract
