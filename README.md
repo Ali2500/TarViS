@@ -48,7 +48,7 @@ conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 cudatoolkit
 pip install -r requirements.txt
 ```
 
-4) Install detectron2 v0.6.
+4) Install detectron2 v0.6 (run these commands from another directory location).
 
 ```
 git clone https://github.com/facebookresearch/detectron2.git
@@ -59,7 +59,7 @@ python -m pip install -e .
 
 In case these instructions become outdated, refer to the [instructions](https://detectron2.readthedocs.io/en/latest/tutorials/install.html) on the official website.
 
-5) Add the repository base dir to `PYTHONATH`
+5) Add the TarViS repo to `PYTHONATH`. The following command should be run from the repository base dir
 
 ```
 export PYTHONPATH=$(pwd)
