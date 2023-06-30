@@ -30,7 +30,7 @@
 
 #### Environment Setup
 
-Create a conda environment with python 3.7
+1) Create a conda environment with python 3.7
 
 ```bash
 conda create -n tarvis python=3.7
