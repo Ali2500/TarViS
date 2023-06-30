@@ -27,7 +27,43 @@
 ## Setup
 
 
-#### Building CUDA Kernels
+#### Environment Setup
+
+Create a conda environment with python 3.7
+
+```bash
+conda create -n tarvis python=3.7
+```
+
+Install PyTorch v1.11. We developed the code base on a workstation with an RTX3090 GPU and CUDA v11.1
+
+```
+conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 cudatoolkit=11.3 -c pytorch
+```
+
+Install other dependencies from pip
+
+```
+pip install -r requirements.txt
+```
+
+Install detectron2 v0.6.
+
+```
+git clone https://github.com/facebookresearch/detectron2.git
+cd detectron2
+git checkout v0.6
+python -m pip install -e .
+```
+
+In case these instructions become outdated, refer to the [instructions](https://detectron2.readthedocs.io/en/latest/tutorials/install.html) on the official website.
+
+Add the repository base dir to `PYTHONATH`
+
+```
+export PYTHONPATH=$(pwd)
+```
+
 Build the deformable attention CUDA kernels as follows:
 
 ```
@@ -35,7 +71,7 @@ cd tarvis/modelling/backbone/temporal_neck/ops
 bash make.sh
 ```
 
-If you already have the kernels installed from Mask2Former then you can skip this step since they're identical.
+If you already have the kernels from Mask2Former installed in your environment then you can skip this step since they're identical.
 
 #### Directory Structure
 
