@@ -72,9 +72,6 @@ video_upload = dcc.Upload(
         multiple=True
     )
 
-message_box = html.Div(id='message-box')
-
-
 video_player_text = html.Div(html.H5("Video Preview:", style={'margin-left': '10px'}))
 video_player = html.Div(
     style={"width": "70%", "padding": "0px", 'margin-left': 'auto', 'margin-right': 'auto'},
@@ -144,15 +141,15 @@ result_video_player = html.Div(
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP], assets_folder="/home/athar/my_github_repos/TarViS/tarvis/demo/assets")
 app.title = "TarViS Demo"
 app.layout = html.Div([
-    popup_dialog, heading, step1, video_upload, message_box, video_player_text, video_player, step2, 
+    popup_dialog, heading, step1, video_upload, video_player_text, video_player, step2, 
     task_dropdown, mask_draw_div, point_draw_div, result_video_player_text, result_video_player], id='main'
 )
     
 
 @callback(
-        [Output('mask-draw-div', 'hidden'), 
+        [Output('mask-draw-div', 'hidden', allow_duplicate=True), 
          Output('graph-pic-camera', 'figure', allow_duplicate=True), 
-         Output('point-draw-div', 'hidden'), 
+         Output('point-draw-div', 'hidden', allow_duplicate=True), 
          Output('point-draw-graph', 'figure', allow_duplicate=True)],
         [Input('task-dropdown', 'value')],
         prevent_initial_call=True
@@ -290,9 +287,12 @@ def mask_drawn(graph_relayout, current_fig):
 
 
 @callback(
-        [Output('point-draw-graph', 'figure', allow_duplicate=True), Output('message-box', 'children', allow_duplicate=True)], 
-        [Input('point-draw-graph', 'clickData'), State('message-box', 'children'), State('point-draw-graph', 'figure')], prevent_initial_call=True)
-def point_drawn(graph_click_data, current_msg, current_fig):
+        [Output('point-draw-graph', 'figure', allow_duplicate=True), 
+         Output('popup', 'message', allow_duplicate=True),
+         Output('popup', 'displayed', allow_duplicate=True)], 
+        [Input('point-draw-graph', 'clickData'),  
+         State('point-draw-graph', 'figure')], prevent_initial_call=True)
+def point_drawn(graph_click_data, current_fig):
     print(graph_click_data)
     pt_x = graph_click_data["points"][0]['x']
     pt_y = graph_click_data["points"][0]['y']
@@ -300,8 +300,8 @@ def point_drawn(graph_click_data, current_msg, current_fig):
 
     for curr_y, curr_x in POINT_ANNS:
         if curr_y == pt_y and curr_x == pt_x:
-            updated_msg = f"The selected point ({curr_y}, {curr_x}) has already been used before"
-            return [dash.no_update, updated_msg]
+            msg = f"The selected point ({curr_y}, {curr_x}) has already been used before"
+            return [dash.no_update, msg, True]
 
     POINT_ANNS.append((pt_y, pt_x))
     FIRST_FRAME_IMAGE = cv2.circle(FIRST_FRAME_IMAGE, (pt_x, pt_y), 6, color=COLOR_MAP[CURRENT_ANN_INDEX], thickness=-1)
@@ -311,11 +311,13 @@ def point_drawn(graph_click_data, current_msg, current_fig):
     fig = px.imshow(FIRST_FRAME_IMAGE, binary_string=True)
     fig.update_layout({"height": 640, "dragmode": "select"})
 
-    return [fig, dash.no_update]
+    return [fig, dash.no_update, dash.no_update]
 
 
 @callback(
         [Output('result-video-player', 'src'),
+         Output('point-draw-div', 'hidden', allow_duplicate=True),
+         Output('mask-draw-div', 'hidden', allow_duplicate=True),
          Output('popup', 'message', allow_duplicate=True),
          Output('popup', 'displayed', allow_duplicate=True)],
         [Input('run-button', 'n_clicks'),
@@ -325,9 +327,9 @@ def run_button_pressed(n_clicks, task_value):
     global INFERER, SEQ_IMAGES, MASK_ANNS, POINT_ANNS
 
     if "VOS" in task_value and not MASK_ANNS:
-        return [dash.no_update, "One or more mask annotations are required", True]
+        return [dash.no_update, True, True, "One or more mask annotations are required", True]
     elif "PET" in task_value and not POINT_ANNS:
-        return [dash.no_update, "One or more point annotations are required", True]
+        return [dash.no_update, True, True, "One or more point annotations are required", True]
 
     viz_images = INFERER.run(
         images=SEQ_IMAGES,
@@ -340,7 +342,7 @@ def run_button_pressed(n_clicks, task_value):
     write_image_sequence_as_video(viz_images, temp_vid_path)
     video_bytes = video_path_to_bytes(temp_vid_path)
 
-    return [video_bytes, dash.no_update, dash.no_update]
+    return [video_bytes, True, True, dash.no_update, dash.no_update]
 
 
 def main(args):
