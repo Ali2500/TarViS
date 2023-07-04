@@ -14,3 +14,5 @@ pip install -r requirements_demo.txt
 python tarvis/demo/main.py /path/to/trained/checkpoint.pth
 ```
 
+Then you can view the GUI by navigating to `localhost:8050` on your web browser (port number may be differ; see on-screen output).
+
