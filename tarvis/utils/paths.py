@@ -195,3 +195,10 @@ class Paths(object):
             "images_base_dir": osp.join(cls.inference_dataset_images_dir(), "vipseg"),
             "panoptic_gt_json_file": osp.join(cls.inference_annotations_dir(), "vipseg", "val.json")
         }
+
+    @classmethod
+    def vipseg_test_paths(cls):
+        return {
+            "images_base_dir": osp.join(cls.inference_dataset_images_dir(), "vipseg_test"),
+            "panoptic_gt_json_file": osp.join(cls.inference_annotations_dir(), "vipseg", "test.json")
+        }

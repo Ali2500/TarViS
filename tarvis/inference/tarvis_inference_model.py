@@ -48,6 +48,19 @@ class TarvisInferenceModel(TarvisModelBase):
         self.previous_clip_frame_indices: Tensor = torch.empty(0)  # [T]
         self.previous_clip_instance_ids: Tensor = torch.empty(0)  # [N]
 
+    def change_target_dataset(self, name: str):
+        cfg_dataset = cfg.DATASETS
+        train_datasets = cfg.TRAINING.DATASET_LIST
+        task_type = cfg_dataset.get(name).TYPE
+        self.dataset_name = name
+
+        if task_type == "instance_seg":
+            assert name in train_datasets, f"Model was only trained on {train_datasets} which does not include" \
+                f" {name}"
+
+        self.query_group_names = self.get_query_group_names(task_type)
+        self.task_type = task_type
+
     def reset_vos_buffers(self):
         self.previous_clip_mask_logits = torch.empty(0)  # key: instance ID, value: logits [T, H, W]
         self.previous_clip_frame_indices = torch.empty(0)

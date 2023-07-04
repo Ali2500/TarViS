@@ -20,34 +20,49 @@ class InferenceDataset(Dataset):
                  overlap_length: int,
                  image_resize_params: Dict[str, Any],
                  first_frame_mask_paths: Optional[List[str]] = None,
+                 first_frame_masks: Optional[List[Dict[int, np.ndarray]]] = None,
                  first_frame_mask_rles: Optional[List[Dict[int, bytes]]] = None,
-                 first_frame_object_points: Optional[List[Dict[int, Tuple[int, int]]]] = None,
-                 first_ref_mask_frame_index: int = 0):
+                 first_frame_object_points: Optional[List[Dict[int, Tuple[int, int]]]] = None, # (y, x) format
+                 first_ref_mask_frame_index: int = 0,
+                 images: Optional[List[np.ndarray]] = None):
 
         super().__init__()
         assert task_type in ("instance_seg", "panoptic_seg", "vos")
 
         self.task_type = task_type
         self.image_paths = image_paths
+        self.images = images
+        assert bool(self.image_paths) ^ bool(self.images), f"Either image paths or images must be given, but not both"
+
         self.clip_length = clip_length
 
         assert overlap_length < clip_length
-        assert first_ref_mask_frame_index < len(image_paths), \
-            f"{first_ref_mask_frame_index} should be less than {len(image_paths)}"
+        if image_paths:
+            assert first_ref_mask_frame_index < len(image_paths), \
+                f"{first_ref_mask_frame_index} should be less than {len(image_paths)}"
+        else:
+            assert images
+            assert first_ref_mask_frame_index < len(images), \
+                f"{first_ref_mask_frame_index} should be less than {len(images)}"
 
         self.overlap_length = overlap_length
-        video_length = len(image_paths)
 
         self.first_frame_mask_paths: Dict[int, str] = dict()
         self.first_frame_object_points: Dict[int, Dict[int, Tuple[int, int]]] = dict()
         self.first_frame_mask_rles: Dict[int, Dict[int, bytes]] = dict()
+        self.first_frame_masks: Dict[int, Dict[int, np.ndarray]] = dict()
 
         if task_type == "vos":
             assert first_frame_mask_paths is not None or first_frame_object_points is not None \
-                   or first_frame_mask_rles is not None
+                   or first_frame_mask_rles is not None or first_frame_masks is not None
 
             if first_frame_mask_paths:
                 self.parse_first_frame_masks(image_paths, first_frame_mask_paths)
+
+            elif first_frame_masks:
+                self.first_frame_masks = {
+                    t: masks_t for t, masks_t in enumerate(first_frame_masks)
+                }
 
             elif first_frame_mask_rles:
                 self.first_frame_mask_rles = {
@@ -63,21 +78,29 @@ class InferenceDataset(Dataset):
 
         # create clips
         self.clip_frame_indices = []
-        for t in range(first_ref_mask_frame_index, video_length, clip_length - overlap_length):
+        for t in range(first_ref_mask_frame_index, self.video_length, clip_length - overlap_length):
             start_t = t
-            end_t = min(start_t + clip_length, len(self.image_paths))
+            end_t = min(start_t + clip_length, self.video_length)
 
             indices = list(range(start_t, end_t))
             self.clip_frame_indices.append(indices)
-            if end_t == video_length:
+            if end_t == self.video_length:
                 break
 
         self.resizer = ImagesResizer(**image_resize_params)
         assert self.resizer.mode != "crop"  # resize should be deterministic during inference
 
     @property
+    def video_length(self):
+        if self.image_paths:
+            return len(self.image_paths)
+        else:
+            assert self.images
+            return len(self.images)
+
+    @property
     def is_vos_dataset(self):
-        return len(self.first_frame_mask_paths) > 0 or len(self.first_frame_mask_rles) > 0
+        return len(self.first_frame_mask_paths) > 0 or len(self.first_frame_mask_rles) > 0 or len(self.first_frame_masks) > 0
 
     @property
     def is_point_vos_dataset(self):
@@ -92,8 +115,14 @@ class InferenceDataset(Dataset):
 
     def __getitem__(self, index):
         frame_indices = self.clip_frame_indices[index]
-        image_paths = [self.image_paths[t] for t in frame_indices]
-        images = [cv2.imread(p, cv2.IMREAD_COLOR) for p in image_paths]
+
+        if self.image_paths:
+            image_paths = [self.image_paths[t] for t in frame_indices]
+            images = [cv2.imread(p, cv2.IMREAD_COLOR) for p in image_paths]
+        else:
+            assert self.images
+            images = [self.images[t] for t in frame_indices]
+
         assert all([img is not None for img in images]), f"One or more image files do not exist: {image_paths}"
 
         orig_height, orig_width = images[0].shape[:2]
@@ -138,7 +167,7 @@ class InferenceDataset(Dataset):
 
         for t in frame_indices:
             if self.is_vos_dataset:
-                if t not in self.first_frame_mask_paths and t not in self.first_frame_mask_rles:
+                if t not in self.first_frame_mask_paths and t not in self.first_frame_mask_rles and t not in self.first_frame_masks:
                     continue
 
                 if t in self.first_frame_mask_paths:
@@ -150,6 +179,12 @@ class InferenceDataset(Dataset):
                     for inst_id in instance_ids.tolist():
                         instance_mask = (mask == inst_id).astype(np.uint8)  # [H, W]
                         mask_list.append(instance_mask)
+                        instance_id_list.append(inst_id)
+                        ref_frame_index_list.append(t)
+
+                elif t in self.first_frame_masks:
+                    for inst_id, mask in self.first_frame_masks[t].items():
+                        mask_list.append(mask.astype(np.uint8))  # [H, W]
                         instance_id_list.append(inst_id)
                         ref_frame_index_list.append(t)
 

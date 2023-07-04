@@ -79,15 +79,29 @@ def create_color_map(N=256, normalized=False):
     return cmap
 
 
-def overlay_mask_on_image(image, mask, mask_opacity=0.6, mask_color=(0, 255, 0)):
+def overlay_mask_on_image(image, mask, mask_opacity=0.6, mask_color=(0, 255, 0), border_thickness=0):
     if mask.ndim == 3:
         assert mask.shape[2] == 1
         _mask = mask.squeeze(axis=2)
     else:
         _mask = mask
+
     mask_bgr = np.stack((_mask, _mask, _mask), axis=2)
     masked_image = np.where(mask_bgr > 0, mask_color, image)
-    return ((mask_opacity * masked_image) + ((1. - mask_opacity) * image)).astype(np.uint8)
+    overlayed_image = ((mask_opacity * masked_image) + ((1. - mask_opacity) * image)).astype(np.uint8)
+
+    if border_thickness > 0:
+        _mask = _mask.astype(np.uint8)
+        assert border_thickness % 2 == 1  # odd number
+        kernel = np.ones((border_thickness, border_thickness), np.uint8)
+        edge_mask = cv2.dilate(_mask, kernel, iterations=1) - _mask
+        edge_mask = np.stack([edge_mask, edge_mask, edge_mask], axis=2)
+        mask_color = np.array(mask_color, np.uint8)[None, None, :]
+        mask_color = np.repeat(mask_color, image.shape[0], 0)
+        mask_color = np.repeat(mask_color, image.shape[1], 1)
+        overlayed_image = np.where(edge_mask > 0, mask_color, overlayed_image)
+
+    return overlayed_image 
 
 
 def annotate_image_instance(image, mask=None, color=None, label=None, bbox=None, **kwargs):
@@ -97,7 +111,7 @@ def annotate_image_instance(image, mask=None, color=None, label=None, bbox=None,
     :param color: tuple/list(int, int, int) in range [0, 255]
     :param label: str
     :param bbox: either "none" or "mask" or tuple of 4 box coords in xyxy format
-    :param kwargs: "bbox_thickness", "text_font", "font_size", "mask_opacity", "text_placement"
+    :param kwargs: "bbox_thickness", "text_font", "font_size", "mask_opacity", "text_placement", "mask_border"
     :return: np.ndarray(H, W, 3)
     """
     # parse box
@@ -116,7 +130,10 @@ def annotate_image_instance(image, mask=None, color=None, label=None, bbox=None,
         annotated_image = np.copy(image)
     else:
         assert image.shape[:2] == mask.shape, f"Shape mismatch between image {image.shape} and mask {mask.shape}"
-        annotated_image = overlay_mask_on_image(image, mask, mask_color=color, mask_opacity=kwargs.get("mask_opacity", 0.6))
+        annotated_image = overlay_mask_on_image(
+            image, mask, mask_color=color, mask_opacity=kwargs.get("mask_opacity", 0.6),
+            border_thickness=kwargs.get("mask_border", 0)
+        )
 
     # if no box and label are present then we're done
     if bbox is None and label is None:

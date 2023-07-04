@@ -201,7 +201,13 @@ def main(args):
         )
 
     elif args.dataset == "VIPSEG":
-        dataset_info = parsers.VIPSegDatasetParser(**Paths.vipseg_val_paths())
+        if cfg_dataset["SPLIT"] == "val":
+            dataset_info = parsers.VIPSegDatasetParser(**Paths.vipseg_val_paths())
+        elif cfg_dataset["SPLIT"] == "test":
+            dataset_info = parsers.VIPSegDatasetParser(**Paths.vipseg_test_paths())
+        else:
+            raise ValueError(f"Invalid split specified: {cfg_dataset['SPLIT']}")
+
         result_formatter = rf.VIPSegResultFormatter(
             output_results_dir, track_score_threshold=cfg_dataset["TRACK_SCORE_THRESHOLD"]
         )
@@ -302,7 +308,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--split", required=False, help="For some datasets e.g. BURST, this option specifies the "
-        "dataset split on which to infer e.g. validation, test."
+        "dataset split on which to infer e.g. val, test."
     )
     parser.add_argument(
         "--amp", action='store_true', help="If given, inference will run with mixed precision."

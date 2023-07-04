@@ -23,7 +23,7 @@ try:
 except ModuleNotFoundError as e:
     info_string = (
         "\n\nPlease compile MultiScaleDeformableAttention CUDA op with the following commands:\n"
-        "\t`cd tarvis/modeling/backbone/pixel_decoder/ops`\n"
+        "\t`cd tarvis/modelling/backbone/temporal_neck/ops`\n"
         "\t`sh make.sh`\n"
     )
     raise ModuleNotFoundError(info_string)
