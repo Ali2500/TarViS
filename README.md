@@ -19,6 +19,7 @@
 
 ## Updates
 
+**30.06.2023:** Significantly improved environment setup instructions.  
 **30.04.2023:** Complete code and pre-trained checkpoints uploaded.
 
 ## Abstract
@@ -30,25 +31,25 @@
 
 ### Environment Setup
 
-Create a conda environment with python 3.7
+1) Create a conda environment with python 3.7
 
 ```bash
 conda create -n tarvis python=3.7
 ```
 
-Install PyTorch v1.11. We developed the code base on a workstation with an RTX3090 GPU and CUDA v11.1
+2) Install PyTorch v1.11. We developed the code base on a workstation with an RTX3090 GPU and CUDA v11.1
 
 ```
 conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 cudatoolkit=11.3 -c pytorch
 ```
 
-Install other dependencies from pip
+3) Install other dependencies from pip
 
 ```
 pip install -r requirements.txt
 ```
 
-Install detectron2 v0.6.
+4) Install detectron2 v0.6 (run these commands from another directory location).
 
 ```
 git clone https://github.com/facebookresearch/detectron2.git
@@ -59,13 +60,13 @@ python -m pip install -e .
 
 In case these instructions become outdated, refer to the [instructions](https://detectron2.readthedocs.io/en/latest/tutorials/install.html) on the official website.
 
-Add the repository base dir to `PYTHONATH`
+5) Add the TarViS repo to `PYTHONATH`. The following command should be run from the repository base dir
 
 ```
 export PYTHONPATH=$(pwd)
 ```
 
-Build the deformable attention CUDA kernels as follows:
+6) Build the deformable attention CUDA kernels as follows:
 
 ```
 cd tarvis/modelling/backbone/temporal_neck/ops
