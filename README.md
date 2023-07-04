@@ -28,7 +28,7 @@
 ## Setup
 
 
-#### Environment Setup
+### Environment Setup
 
 Create a conda environment with python 3.7
 
@@ -74,7 +74,7 @@ bash make.sh
 
 If you already have the kernels from Mask2Former installed in your environment then you can skip this step since they're identical.
 
-#### Directory Structure
+### Directory Structure
 
 For managing datasets, checkpoints and pretrained backbones, we use a single environment variable `$TARVIS_WORKSPACE_DIR` which points to a directory that is organized as follows:
 
@@ -183,7 +183,7 @@ For managing datasets, checkpoints and pretrained backbones, we use a single env
 
 You do not need to setup all the datasets if you only want to train/infer on a sub-set of them. For training the full model however, you need the complete directory tree above. All paths in-code are provided from [tarvis/utils/paths.py](https://github.com/Ali2500/TarViS/blob/main/tarvis/utils/paths.py), so any changes can be easily made there.
 
-#### Partially complete workspace directory download
+### Partially complete workspace directory download
 
 To make the setup easier, you can download a partially complete workspace directory from [HERE](https://omnomnom.vision.rwth-aachen.de/data/TarViS/tarvis_workspace_dir.zip). It does not include any image files, but it does contain all the JSON format annotation files. For some datasets, e.g. DAVIS, we converted the dataset annotations into a custom format to make it easier to re-use data loading code.
 

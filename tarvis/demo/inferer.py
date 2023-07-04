@@ -103,7 +103,6 @@ class TarvisDemoInferer:
             inference_params=cfg_dataset
         )
 
-        
         if task_type == "vos":
             object_masks = sequence_results["track_mask_rles"]
         elif task_type in ("instance_seg", "panoptic_seg"):
