@@ -19,7 +19,7 @@
 
 ## Updates
 
-**04.07.2023:** Added interactive demo with GUI!
+**04.07.2023:** Added [interactive GUI demo](https://github.com/Ali2500/TarViS/blob/main/DEMO.md)!  
 **30.06.2023:** Significantly improved environment setup instructions.  
 **30.04.2023:** Complete code and pre-trained checkpoints uploaded.
 
@@ -27,8 +27,11 @@
 
 > The general domain of video segmentation is currently fragmented into different tasks spanning multiple benchmarks. Despite rapid progress in the state-of-the-art, current methods are overwhelmingly task-specific and cannot conceptually generalize to other tasks. Inspired by recent approaches with multi-task capability, we propose TarViS: a novel, unified network architecture that can be applied to any task that requires segmenting a set of arbitrarily def ined ‘targets’ in video. Our approach is flexible with respect to how tasks define these targets, since it models the latter as abstract ‘queries’ which are then used to predict pixel-precise target masks. A single TarViS model can be trained jointly on a collection of datasets spanning different tasks, and can hot-swap between tasks during inference without any task-specific retraining. To demonstrate its effectiveness, we apply TarViS to four different tasks, namely Video Instance Segmentation (VIS), Video Panoptic Segmentation (VPS), Video Object Segmentation (VOS) and Point Exemplar-guided Tracking (PET). Our unified, jointly trained model achieves state-of-the-art performance on 5/7 benchmarks spanning these four tasks, and competitive performance on the remaining two
 
-## Setup
+## Demo
 
+See the separate [demo readme](https://github.com/Ali2500/TarViS/blob/main/DEMO.md)
+
+## Setup
 
 ### Environment Setup
 
