@@ -19,6 +19,7 @@
 
 ## Updates
 
+**04.07.2023:** Added interactive demo with GUI!
 **30.06.2023:** Significantly improved environment setup instructions.  
 **30.04.2023:** Complete code and pre-trained checkpoints uploaded.
 
