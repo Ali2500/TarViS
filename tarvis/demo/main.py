@@ -199,7 +199,7 @@ def process_selected_video(list_of_contents, list_of_names):
             return [dash.no_update, dash.no_update, updated_msg, True]   
         else:
             images = video_content_to_frame_list(list_of_contents[0])
-            video_bytes = dash.no_update
+            video_bytes = list_of_contents[0]
 
     elif list_of_names[0].endswith(".png") or list_of_names[0].endswith(".jpg"):
         # sort according to filename
@@ -219,7 +219,6 @@ def process_selected_video(list_of_contents, list_of_names):
         temp_vid_path = osp.join(tempfile.mkdtemp(), "video.mp4")
         write_image_sequence_as_video(images, temp_vid_path)
         video_bytes = video_path_to_bytes(temp_vid_path)
-        updated_msg = f"Selected {len(images)} image files"
 
     img = images[0]
 
